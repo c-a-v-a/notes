@@ -1,21 +1,36 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
+import { Image } from 'react-native';
+import Notes from './components/Notes';
+import AddNote from './components/AddNote';
 
-export default function App() {
+const Drawer = createDrawerNavigator();
+
+function CustomDrawerContent(props) {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <DrawerContentScrollView {...props}>
+
+    <DrawerItemList {...props} />
+
+    <DrawerItem
+      label="test"
+      icon={() => <Image />}
+      onPress={() => console.log("test")}
+    />
+
+    </DrawerContentScrollView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Drawer.Navigator drawerContent={ (props) => <CustomDrawerContent { ...props } />}>
+        <Drawer.Screen name='Notes' component={ Notes }/>
+        <Drawer.Screen name='Add note' component={ AddNote }/>
+      </Drawer.Navigator>
+    </NavigationContainer>
+  );
+}
+
