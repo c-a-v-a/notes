@@ -65,6 +65,12 @@ class AddNote extends React.Component {
 		await SecureStore.setItemAsync(`T${key}`, `${this.state.title}`);
 	}
 
+	async saveColor(key) {
+		const color	= '#'+(0x1000000+(Math.random())*0xffffff).toString(16)
+
+		await SecureStore.setItemAsync(`C${key}`, color)
+	}
+
 	async save() {
 		let key = parseInt(this.state.keys[this.state.keys.length - 1]) + 1;
 
@@ -77,6 +83,7 @@ class AddNote extends React.Component {
 
 		await this.saveNote(key);
 		await this.saveTitle(key);
+		await this.saveColor(key);
 		
 		await this.getKeys();
 	}

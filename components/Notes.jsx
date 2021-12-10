@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, FlatList, TouchableOpacity, View } from 'react-native';
+import { Text, FlatList, TouchableOpacity, View, Alert } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 
 class Notes extends React.Component {
@@ -81,7 +81,20 @@ class Notes extends React.Component {
 					renderItem={({item}) => 
 						(
 							<TouchableOpacity 
-								onLongPress={() => this.removeNote(item)}
+								onLongPress={() => Alert.alert(
+									'Warning',
+									'Do you want to delete this note',
+									[
+										{
+											text: 'Cancel',
+											style: 'cancel'
+										},
+										{ 
+											text: 'ok',
+											onPress: () => this.removeNote()
+										}
+									]
+								)}
 								style={{ width: '40%', height: 90, margin: '5%', backgroundColor: 'blue' }}>
 								<Text style={{ fontSize: 20 }}>{ this.state.titles[item] }</Text>
 								<Text>{ this.state.notes[item] }</Text>
